@@ -1,17 +1,20 @@
 import React, {useState} from 'react'
-import { PropsAddTodo } from '../interfaces'
 
-export const AddTodo: React.FC <PropsAddTodo> = ({onAdd}) => {
-    const [title, setTitle] = useState<string>('')
+interface AddTodoProps {
+    onAdd: (value: string) => void
+}
 
-    const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.target.value)
+const AddTodo: React.FC<AddTodoProps> = ({onAdd}): JSX.Element => {
+    const [value, setValue] = useState<string>('')
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setValue(event.target.value)
     }
 
-    const keyPressHandler = (event: React.KeyboardEvent) => {
-        if(event.key === 'Enter' && title.length !== 0) {
-            onAdd(title);
-            setTitle('')
+    const keyPressHandler = (event: React.KeyboardEvent): void => { 
+        if(event.key === 'Enter' && value.trim().length) {
+            onAdd(value);
+            setValue('')
         }
     }
 
@@ -19,13 +22,15 @@ export const AddTodo: React.FC <PropsAddTodo> = ({onAdd}) => {
         <div className = 'input-field mt' >
             <input 
                 type='text'
-                value={title}
+                value={value}
                 id='title'
                 className='active'
-                onChange={changeInput}
+                onChange={handleChange}
                 onKeyPress={keyPressHandler}
             />
             <label htmlFor='title'>Write Todo</label>
         </div>
     )
 } 
+
+export default AddTodo
