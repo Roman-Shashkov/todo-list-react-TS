@@ -1,4 +1,6 @@
 import React from 'react'
+import cn from 'classnames'
+
 
 interface ItemFilterProps {
     filter: string
@@ -15,11 +17,10 @@ const ItemFilter: React.FC<ItemFilterProps> = ({onFilterChange, filter}): JSX.El
 
     const buttons = buttonsArr.map (({name, label}) => {
         const isActive = filter === name
-        const isClass = isActive ? 'orange darken-1' : ''
         return (
             <button 
                 type='button'
-                className = {`waves-effect waves-light btn ${isClass}`}
+                className={ cn('waves-effect waves-light btn', {'orange darken-1' : isActive })}
                 key = {name}
                 onClick = {() => onFilterChange(name)}
             >
